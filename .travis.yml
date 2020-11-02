@@ -11,6 +11,33 @@ matrix:
   fast_finish: true
   include:
 
+# https://helm.sh/docs/intro/install/
+# https://minikube.sigs.k8s.io/docs/start/
+    - name: "deploy minikube helm w homebrew on macOS 10.15.7 osx xcode12.2"
+      os: osx
+      osx_image:
+        - xcode12.2 #macOS 10.15.7   
+      addons:
+        homebrew:
+          packages:
+          - python
+          - minikube
+          - helm
+          update: true            
+      language: shell
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - python --version
+        - pip install -r requirements.txt
+      script:
+      - which minikube
+      - minikube version
+      - helm version
+      after_success:
+        - deactivate
+
 # TESTED OK
 # https://minikube.sigs.k8s.io/docs/start/
     - name: "deploy minikube wo homebrew on macOS 10.15.7 osx xcode12.2"
@@ -52,7 +79,6 @@ matrix:
         - python --version
         - pip install -r requirements.txt
       script:
-      # - brew doctor
       - which minikube
       - minikube version
       after_success:
