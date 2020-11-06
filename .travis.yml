@@ -45,6 +45,7 @@ matrix:
       script:
         - pip install conan
         - conan #Check if Conan is installed correctly.
+        - sudo make deploy-MD5encrypter-app
       after_success:
         - deactivate
 
