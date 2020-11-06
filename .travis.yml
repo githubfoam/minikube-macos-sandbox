@@ -11,6 +11,67 @@ matrix:
   fast_finish: true
   include:
 
+# https://docs.conan.io/en/1.12/installation.html
+# https://github.com/conan-io/conan
+    - name: "Install Conan from source wo snaps on bionic amd64"
+      dist: bionic
+      arch: amd64
+      language: python
+      python: 3.7
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - pip install -r requirements.txt
+      script:
+        - git clone https://github.com/conan-io/conan.git
+        - cd conan && pip install -r conans/requirements.txt
+        - conan #Check if Conan is installed correctly.
+      after_success:
+        - deactivate
+
+# https://docs.conan.io/en/1.12/installation.html
+# https://github.com/conan-io/conan
+    - name: "Install Conan with pip wo snaps on bionic amd64"
+      dist: bionic
+      arch: amd64
+      language: python
+      python: 3.7
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - pip install -r requirements.txt
+      script:
+        - pip install conan
+        - conan #Check if Conan is installed correctly.
+      after_success:
+        - deactivate
+
+# https://docs.conan.io/en/1.12/installation.html
+# https://github.com/conan-io/conan
+    - name: "deploy conan w homebrew on macOS 10.15.7 osx xcode12.2"
+      os: osx
+      osx_image:
+        - xcode12.2 #macOS 10.15.7   
+      addons:
+        homebrew:
+          packages:
+          - python
+          - conan
+          update: true            
+      language: shell
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - python --version
+        - pip install -r requirements.txt
+      script:
+      - conan #Check if Conan is installed correctly.
+      after_success:
+        - deactivate
+
 # https://helm.sh/docs/intro/install/
 # https://minikube.sigs.k8s.io/docs/start/
     - name: "deploy minikube helm w homebrew on macOS 10.15.7 osx xcode12.2"
