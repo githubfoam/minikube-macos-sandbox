@@ -44,7 +44,8 @@ matrix:
       arch: amd64
       language: scala
       scala:
-      - 2.10.6
+      # - 2.10.6
+      - 2.11.8
       # python: 3.7
       # before_install:
       #   - pip3 install virtualenv
