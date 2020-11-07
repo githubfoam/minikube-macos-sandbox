@@ -106,7 +106,7 @@ matrix:
         - python --version
         - pip install -r requirements.txt
       script:
-      - sbt
+      - sbt &
       - exit #Exit sbt shell
       after_success:
         - deactivate
@@ -125,13 +125,17 @@ matrix:
         # - pip install -r requirements.txt
       script:
         - choco install sbt
+        # Environment Vars (like PATH) have changed. Close/reopen your shell to
+        # see the changes (or in powershell/cmd.exe just type `refreshenv`).
+        # Software installed as 'msi', install location is likely default.
+        - refreshenv
         - sbt
         - exit #Exit sbt shell        
 
 # https://scoop.sh/
 # https://kubernetes.io/docs/tasks/tools/install-kubectl/
 # https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Windows.html
-    - name: "deploy kubectl latest w scoop Python 3.8 on Windows"
+    - name: "Installing sbt latest w scoop Python 3.8 on Windows"
       os: windows
       language: shell
       env:
@@ -147,7 +151,7 @@ matrix:
         # - echo Set-ExecutionPolicy RemoteSigned -scope CurrentUser #when debugging a command
         # - Set-ExecutionPolicy RemoteSigned -scope CurrentUser 
       # Make sure PowerShell 5 (or later, include PowerShell Core) and .NET Framework 4.5 (or later) are installed.
-        - Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+        # - Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
         # - iwr -useb get.scoop.sh | iex # or shorter
         # - scoop install kubectl
         # - scoop install sbt
