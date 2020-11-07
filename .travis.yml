@@ -10,6 +10,7 @@ notifications:
 matrix:
   fast_finish: true
   include:
+
 # https://sdkman.io/install
 # https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Linux.html
     - name: "Install sbt from SDKMAN wo snaps on bionic amd64"
@@ -54,14 +55,16 @@ matrix:
         - mkdir foo-build && cd foo-build && touch build.sbt
         # Download failed. Obtain the jar manually and place it at /home/travis/.sbt/launchers/0.13.17/sbt-launch.jar
         # - sbt
-        - wget http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.17/sbt-launch.jar
-        - ls -lai /home/travis/.sbt
-        # - cp /home/travis/.sbt/launchers/0.13.17/sbt-launch.jar 
+        # Connecting to repo.typesafe.com (repo.typesafe.com)|34.193.5.230|:80... failed: Connection refused.
+        # - wget http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.17/sbt-launch.jar
+        # ls: cannot access '/home/travis/.sbt': No such file or directory
+        # - ls -lai /home/travis/.sbt        
         # - exit #Exit sbt shell
+      after_success:
+        - deactivate
 
 
-
-    - name: "Install sbt from DEB package  wo snaps on bionic amd64"
+    - name: "Install sbt w gatling from DEB package  wo snaps on bionic amd64"
       dist: bionic
       arch: amd64
       language: python
@@ -77,11 +80,11 @@ matrix:
         - sudo apt-get update -qq
         - sudo apt-get install sbt -yqq
         - git clone https://github.com/gatling/gatling-sbt-plugin-demo.git && cd gatling-sbt-plugin-demo
-        - sbt
-        - gatling:test
-        - gatling:testOnly computerdatabase.BasicSimulation
-        - tasks gatling -v
-        - exit #Exit sbt shell
+        # - sbt
+        # - gatling:test
+        # - gatling:testOnly computerdatabase.BasicSimulation
+        # - tasks gatling -v
+        # - exit #Exit sbt shell
       after_success:
         - deactivate
 
@@ -104,12 +107,13 @@ matrix:
         - pip install -r requirements.txt
       script:
       - sbt
+      - exit #Exit sbt shell
       after_success:
         - deactivate
 
 # https://chocolatey.org/
 # https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Windows.html
-    - name: "deploy Mobile Security Framework (MobSF) Python 3.8 on Windows"
+    - name: "Installing sbt Python 3.8 on Windows"
       os: 
       - windows
       language: shell
@@ -121,7 +125,8 @@ matrix:
         # - pip install -r requirements.txt
       script:
         - choco install sbt
-        - dir  
+        - sbt
+        - exit #Exit sbt shell        
 
 # https://scoop.sh/
 # https://kubernetes.io/docs/tasks/tools/install-kubectl/
@@ -137,18 +142,18 @@ matrix:
       script:
       # change the execution policy (i.e. enable Powershell) with
         - set #see all currently defined environment variables 
-        - set USERPROFILE #query the value of %USERPROFILE%
-        - net user # displays all user accounts on a local machine
+        # - set USERPROFILE #query the value of %USERPROFILE%
+        # - net user # displays all user accounts on a local machine
         # - echo Set-ExecutionPolicy RemoteSigned -scope CurrentUser #when debugging a command
-        - Set-ExecutionPolicy RemoteSigned -scope CurrentUser 
+        # - Set-ExecutionPolicy RemoteSigned -scope CurrentUser 
       # Make sure PowerShell 5 (or later, include PowerShell Core) and .NET Framework 4.5 (or later) are installed.
         - Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
         # - iwr -useb get.scoop.sh | iex # or shorter
         # - scoop install kubectl
-        - scoop install sbt
+        # - scoop install sbt
         # - kubectl version --client #Test to ensure the version you installed is up-to-date
         # If you're using cmd.exe, run: cd %USERPROFILE%
-        - echo %USERPROFILE%
+        # - echo %USERPROFILE%
         # - dir
         # - cd ~
         # - mkdir .kube #Create the .kube directory
