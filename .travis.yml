@@ -13,37 +13,39 @@ matrix:
 
 # https://sdkman.io/install
 # https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Linux.html
-    - name: "Install sbt from SDKMAN wo snaps on bionic amd64"
-      dist: bionic
-      arch: amd64
-      language: python
-      python: 3.7
-      before_install:
-        - pip3 install virtualenv
-        - virtualenv -p $(which python3) ~venvpy3
-        - source ~venvpy3/bin/activate
-        - pip install -r requirements.txt
-      script:
-        - curl -s "https://get.sdkman.io" | bash
-        # open a new terminal, or run the following in the existing one
-        - source "/home/travis/.sdkman/bin/sdkman-init.sh"
-        - sdk list java
-        # - sdk install java 11.0.4.hs-adpt
-        - sdk install java 15.0.1.j9-adpt
-        - sdk install sbt
-        - mkdir foo-build && cd foo-build && touch build.sbt
-        - sbt
-        - exit
-      after_success:
-        - deactivate
+    # - name: "Install sbt from SDKMAN wo snaps on bionic amd64"
+    #   dist: bionic
+    #   arch: amd64
+    #   language: python
+    #   python: 3.7
+    #   before_install:
+    #     - pip3 install virtualenv
+    #     - virtualenv -p $(which python3) ~venvpy3
+    #     - source ~venvpy3/bin/activate
+    #     - pip install -r requirements.txt
+    #   script:
+    #     - curl -s "https://get.sdkman.io" | bash
+    #     # open a new terminal, or run the following in the existing one
+    #     - source "/home/travis/.sdkman/bin/sdkman-init.sh"
+    #     - sdk list java
+    #     # - sdk install java 11.0.4.hs-adpt
+    #     - sdk install java 15.0.1.j9-adpt
+    #     - sdk install sbt
+    #     - mkdir foo-build && cd foo-build && touch build.sbt
+    #     - sbt
+    #     - exit
+    #   after_success:
+    #     - deactivate
 
 # https://www.scala-sbt.org/1.x/docs/sbt-by-example.html
 # https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Linux.html
     - name: "Install sbt from DEB package  wo snaps on bionic amd64"
       dist: bionic
       arch: amd64
-      language: python
-      python: 3.7
+      language: scala
+      scala:
+      - 2.10.6
+      # python: 3.7
       before_install:
         - pip3 install virtualenv
         - virtualenv -p $(which python3) ~venvpy3
@@ -54,8 +56,9 @@ matrix:
         - curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
         - sudo apt-get update -qq
         - sudo apt-get install sbt -yqq
+        - sbt package
         # Create a minimum sbt build
-        - mkdir foo-build && cd foo-build && touch build.sbt
+        # - mkdir foo-build && cd foo-build && touch build.sbt
         # Download failed. Obtain the jar manually and place it at /home/travis/.sbt/launchers/0.13.17/sbt-launch.jar
         # - sbt
         # Connecting to repo.typesafe.com (repo.typesafe.com)|34.193.5.230|:80... failed: Connection refused.
@@ -63,94 +66,94 @@ matrix:
         # ls: cannot access '/home/travis/.sbt': No such file or directory
         # - ls -lai /home/travis/.sbt        
         # - exit #Exit sbt shell
-      after_success:
-        - deactivate
+      # after_success:
+      #   - deactivate
 
 
-    - name: "Install sbt w gatling from DEB package  wo snaps on bionic amd64"
-      dist: bionic
-      arch: amd64
-      language: python
-      python: 3.7
-      before_install:
-        - pip3 install virtualenv
-        - virtualenv -p $(which python3) ~venvpy3
-        - source ~venvpy3/bin/activate
-        - pip install -r requirements.txt
-      script:
-        - echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
-        - curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
-        - sudo apt-get update -qq
-        - sudo apt-get install sbt -yqq
-        - git clone https://github.com/gatling/gatling-sbt-plugin-demo.git && cd gatling-sbt-plugin-demo
+    # - name: "Install sbt w gatling from DEB package  wo snaps on bionic amd64"
+    #   dist: bionic
+    #   arch: amd64
+    #   language: python
+    #   python: 3.7
+    #   before_install:
+    #     - pip3 install virtualenv
+    #     - virtualenv -p $(which python3) ~venvpy3
+    #     - source ~venvpy3/bin/activate
+    #     - pip install -r requirements.txt
+    #   script:
+    #     - echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+    #     - curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
+    #     - sudo apt-get update -qq
+    #     - sudo apt-get install sbt -yqq
+    #     - git clone https://github.com/gatling/gatling-sbt-plugin-demo.git && cd gatling-sbt-plugin-demo
         # - sbt
         # - gatling:test
         # - gatling:testOnly computerdatabase.BasicSimulation
         # - tasks gatling -v
         # - exit #Exit sbt shell
-      after_success:
-        - deactivate
+      # after_success:
+      #   - deactivate
 
-    - name: "Installing sbt from a third-party package(homebrew) on macOS 10.15.7 osx xcode12.2"
-      os: osx
-      osx_image:
-        - xcode12.2 #macOS 10.15.7   
-      addons:
-        homebrew:
-          packages:
-          - python
-          - sbt
-          update: true            
-      language: shell
-      before_install:
-        - pip3 install virtualenv
-        - virtualenv -p $(which python3) ~venvpy3
-        - source ~venvpy3/bin/activate
-        - python --version
-        - pip install -r requirements.txt
-      script:
-      - sbt
-      # - exit #Exit sbt shell
-      after_success:
-        - deactivate
+    # - name: "Installing sbt from a third-party package(homebrew) on macOS 10.15.7 osx xcode12.2"
+    #   os: osx
+    #   osx_image:
+    #     - xcode12.2 #macOS 10.15.7   
+    #   addons:
+    #     homebrew:
+    #       packages:
+    #       - python
+    #       - sbt
+    #       update: true            
+    #   language: shell
+    #   before_install:
+    #     - pip3 install virtualenv
+    #     - virtualenv -p $(which python3) ~venvpy3
+    #     - source ~venvpy3/bin/activate
+    #     - python --version
+    #     - pip install -r requirements.txt
+    #   script:
+    #   - sbt
+    #   # - exit #Exit sbt shell
+    #   after_success:
+    #     - deactivate
 
 # https://chocolatey.org/
 # https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Windows.html
-    - name: "Installing sbt Python 3.8 on Windows"
-      os: 
-      - windows
-      language: shell
-      env:
-        - PATH=/c/Python38:/c/Python38/Scripts:$PATH
-      before_install:
-        - choco install python
-        - python --version
-        # - pip install -r requirements.txt
-      script:
-        - choco install sbt
-        # Environment Vars (like PATH) have changed. Close/reopen your shell to
-        # see the changes (or in powershell/cmd.exe just type `refreshenv`).
-        # Software installed as 'msi', install location is likely default.
-        # - refreshenv
-        - cmd.exe //c "RefreshEnv.cmd & sbt.exe"
-        - sbt
-        - exit #Exit sbt shell  
-        - cmd.exe //c "exit.exe"      
+    # - name: "Installing sbt Python 3.8 on Windows"
+    #   os: 
+    #   - windows
+    #   language: shell
+    #   env:
+    #     - PATH=/c/Python38:/c/Python38/Scripts:$PATH
+    #   before_install:
+    #     - choco install python
+    #     - python --version
+    #     # - pip install -r requirements.txt
+    #   script:
+    #     - choco install sbt
+    #     # Environment Vars (like PATH) have changed. Close/reopen your shell to
+    #     # see the changes (or in powershell/cmd.exe just type `refreshenv`).
+    #     # Software installed as 'msi', install location is likely default.
+    #     # - refreshenv
+    #     - cmd.exe //c "RefreshEnv.cmd & sbt.exe"
+    #     - sbt
+    #     - exit #Exit sbt shell  
+    #     - cmd.exe //c "exit.exe"      
 
 # https://scoop.sh/
 # https://kubernetes.io/docs/tasks/tools/install-kubectl/
 # https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Windows.html
-    - name: "Installing sbt latest w scoop Python 3.8 on Windows"
-      os: windows
-      language: shell
-      env:
-        - PATH=/c/Python38:/c/Python38/Scripts:$PATH
-      before_install:
-        - choco install python
-        - python --version
-      script:
+    # - name: "Installing sbt latest w scoop Python 3.8 on Windows"
+    #   os: windows
+    #   language: shell
+    #   env:
+    #     - PATH=/c/Python38:/c/Python38/Scripts:$PATH
+    #   before_install:
+    #     - choco install python
+    #     - python --version
+    #   script:
       # change the execution policy (i.e. enable Powershell) with
-        - set #see all currently defined environment variables 
+        # - set #see all currently defined environment variables 
         # - set USERPROFILE #query the value of %USERPROFILE%
         # - net user # displays all user accounts on a local machine
         # - echo Set-ExecutionPolicy RemoteSigned -scope CurrentUser #when debugging a command
