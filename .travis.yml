@@ -106,8 +106,8 @@ matrix:
         - python --version
         - pip install -r requirements.txt
       script:
-      - sbt &
-      - exit #Exit sbt shell
+      - sbt
+      # - exit #Exit sbt shell
       after_success:
         - deactivate
 
@@ -128,9 +128,11 @@ matrix:
         # Environment Vars (like PATH) have changed. Close/reopen your shell to
         # see the changes (or in powershell/cmd.exe just type `refreshenv`).
         # Software installed as 'msi', install location is likely default.
-        - refreshenv
+        # - refreshenv
+        - cmd.exe //c "RefreshEnv.cmd & sbt.exe"
         - sbt
-        - exit #Exit sbt shell        
+        - exit #Exit sbt shell  
+        - cmd.exe //c "exit.exe"      
 
 # https://scoop.sh/
 # https://kubernetes.io/docs/tasks/tools/install-kubectl/
