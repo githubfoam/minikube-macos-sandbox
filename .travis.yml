@@ -27,7 +27,8 @@ matrix:
         # open a new terminal, or run the following in the existing one
         - source "/home/travis/.sdkman/bin/sdkman-init.sh"
         - sdk list java
-        - sdk install java 11.0.4.hs-adpt
+        # - sdk install java 11.0.4.hs-adpt
+        - sdk install java 15.0.1.j9-adpt
         - sdk install sbt
       after_success:
         - deactivate
@@ -51,8 +52,12 @@ matrix:
         - sudo apt-get install sbt -yqq
         # Create a minimum sbt build
         - mkdir foo-build && cd foo-build && touch build.sbt
-        - sudo sbt 
-        - exit #Exit sbt shell
+        # Download failed. Obtain the jar manually and place it at /home/travis/.sbt/launchers/0.13.17/sbt-launch.jar
+        # - sbt
+        - wget http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.17/sbt-launch.jar
+        - ls -lai /home/travis/.sbt
+        # - cp /home/travis/.sbt/launchers/0.13.17/sbt-launch.jar 
+        # - exit #Exit sbt shell
 
 
 
@@ -116,28 +121,42 @@ matrix:
         # - pip install -r requirements.txt
       script:
         - choco install sbt
-        - dir       
+        - dir  
 
 # https://scoop.sh/
+# https://kubernetes.io/docs/tasks/tools/install-kubectl/
 # https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Windows.html
-    - name: "deploy Mobile Security Framework (MobSF) Python 3.8 on Windows"
-      os: 
-      - windows
+    - name: "deploy kubectl latest w scoop Python 3.8 on Windows"
+      os: windows
       language: shell
       env:
         - PATH=/c/Python38:/c/Python38/Scripts:$PATH
       before_install:
         - choco install python
         - python --version
-        # - pip install -r requirements.txt
       script:
-      #  if you get an error you might need to change the execution policy (i.e. enable Powershell) with
-        - Set-ExecutionPolicy RemoteSigned -scope CurrentUser
-        # Make sure PowerShell 5 (or later, include PowerShell Core) and .NET Framework 4.5 (or later) are installedMake sure PowerShell 5 (or later, include PowerShell Core) and .NET Framework 4.5 (or later) are installed
+      # change the execution policy (i.e. enable Powershell) with
+        - set #see all currently defined environment variables 
+        - set USERPROFILE #query the value of %USERPROFILE%
+        - net user # displays all user accounts on a local machine
+        # - echo Set-ExecutionPolicy RemoteSigned -scope CurrentUser #when debugging a command
+        - Set-ExecutionPolicy RemoteSigned -scope CurrentUser 
+      # Make sure PowerShell 5 (or later, include PowerShell Core) and .NET Framework 4.5 (or later) are installed.
         - Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
-        # or shorter
-        # - iwr -useb get.scoop.sh | iex
-        - dir     
+        # - iwr -useb get.scoop.sh | iex # or shorter
+        # - scoop install kubectl
+        - scoop install sbt
+        # - kubectl version --client #Test to ensure the version you installed is up-to-date
+        # If you're using cmd.exe, run: cd %USERPROFILE%
+        - echo %USERPROFILE%
+        # - dir
+        # - cd ~
+        # - mkdir .kube #Create the .kube directory
+        # - cd .kube #Change to the .kube directory
+        # -Configure kubectl to use a remote Kubernetes cluster
+        # Edit the config file with a text editor of your choice, such as Notepad
+        # - New-Item config -type file
+        # - dir        
 
 # # https://docs.conan.io/en/1.12/installation.html
 # # https://github.com/conan-io/conan
