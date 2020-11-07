@@ -46,11 +46,11 @@ matrix:
       scala:
       - 2.10.6
       # python: 3.7
-      before_install:
-        - pip3 install virtualenv
-        - virtualenv -p $(which python3) ~venvpy3
-        - source ~venvpy3/bin/activate
-        - pip install -r requirements.txt
+      # before_install:
+      #   - pip3 install virtualenv
+      #   - virtualenv -p $(which python3) ~venvpy3
+      #   - source ~venvpy3/bin/activate
+      #   - pip install -r requirements.txt
       script:
         - echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
         - curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
