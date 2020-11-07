@@ -51,7 +51,7 @@ matrix:
         - sudo apt-get install sbt -yqq
         # Create a minimum sbt build
         - mkdir foo-build && cd foo-build && touch build.sbt
-        - sbt 
+        - sudo sbt 
         - exit #Exit sbt shell
 
 
