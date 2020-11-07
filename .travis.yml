@@ -31,6 +31,9 @@ matrix:
         # - sdk install java 11.0.4.hs-adpt
         - sdk install java 15.0.1.j9-adpt
         - sdk install sbt
+        - mkdir foo-build && cd foo-build && touch build.sbt
+        - sbt
+        - exit
       after_success:
         - deactivate
 
