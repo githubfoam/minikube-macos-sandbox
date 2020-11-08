@@ -1,4 +1,4 @@
-name := "example-sbt-travisci"
+name := "example-sbt-findbugs"
 version := "0.1"
 scalaVersion := "2.11.8"
 
