@@ -50,8 +50,7 @@ matrix:
     #   after_success:
     #     - deactivate
 
-# https://www.scala-sbt.org/1.x/docs/sbt-by-example.html
-# https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Linux.html
+# TESTED OK  
     - name: "Install sbt(gatling scalafmt) from DEB package  wo snaps on bionic amd64"
       dist: bionic
       arch: amd64
@@ -59,7 +58,24 @@ matrix:
       scala:
       - 2.12.8   
       script:
-        - cd sbt/example-sbt-gatling && sbt package
+        - cd sbt/example-sbt-gatling && sbt package #OK
+      after_success:
+        - deactivate
+
+    - name: "Install sbt(gatling scalafmt) from DEB package  wo snaps on bionic amd64"
+      dist: bionic
+      arch: amd64
+      language: scala
+      scala:
+      - 2.12.8   
+      script:
+        - cd sbt/example-sbt-gatling 
+        # List all tasks
+        - sbt && tasks gatling -v
+        #Run all simulations
+        - gatling:test 
+        # Run a single simulation
+        - gatling:testOnly computerdatabase.BasicSimulation 
       after_success:
         - deactivate
 
