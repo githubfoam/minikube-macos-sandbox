@@ -50,6 +50,18 @@ matrix:
     #   after_success:
     #     - deactivate
 
+    - name: "Install sbt(blackduckcopilot) from DEB package  wo snaps on bionic amd64"
+      dist: bionic
+      arch: amd64
+      language: scala
+      scala:
+        - 2.10.6   
+      script:
+        - cd sbt/example-sbt-blackduckcopilot && sbt package      
+      after_success:
+        - bash <(curl -s https://copilot.blackducksoftware.com/ci/travis/scripts/upload)        
+        - deactivate
+
 # TESTED OK  
     - name: "Install sbt(gatling scalafmt) from DEB package  wo snaps on bionic amd64"
       dist: bionic
@@ -79,6 +91,7 @@ matrix:
       after_success:
         - deactivate
 
+# cat: /home/travis/.sbt/launchers/1.4.2/sbt-launch.jar.md5: No such file or directory
 # org.scala-sbt#sbt;0.13.0: not found
     - name: "Install sbt(jacoco) from DEB package  wo snaps on bionic amd64"
       dist: bionic
