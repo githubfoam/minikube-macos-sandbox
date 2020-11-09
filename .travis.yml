@@ -11,391 +11,76 @@ matrix:
   fast_finish: true
   include:
 
-# https://sdkman.io/install
-# https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Linux.html
-    # - name: "Install sbt from SDKMAN wo snaps on bionic amd64"
-    #   dist: bionic
-    #   arch: amd64
-    #   language: scala
-    #   scala:
-    #   - 2.11.8
-    #   script:
-    #     - curl -s "https://get.sdkman.io" | bash
-    #     # open a new terminal, or run the following in the existing one
-    #     - source "/home/travis/.sdkman/bin/sdkman-init.sh"
-    #     - sdk list java
-    #     # - sdk install java 11.0.4.hs-adpt
-    #     - sdk install java 15.0.1.j9-adpt
-    #     - sdk install sbt
-    #     - sbt package
-    #   after_success:
-    #     - deactivate
-
-# TESTED NOT OK       
-# https://www.scala-sbt.org/1.x/docs/sbt-by-example.html
-# https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Linux.html
-    # - name: "Install sbt(scalatest) from DEB package  wo snaps on bionic amd64"
-    #   dist: bionic
-    #   arch: amd64
-    #   # language: scala
-    #   # scala:
-    #   # - 2.11.8    
-    #   before_install:
-    #     - echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
-    #     - curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
-    #     - sudo apt-get update -qq
-    #     - sudo apt-get install sbt -yqq       
-    #   script:
-    #     - cd sbt/example-sbt-scalatest && sbt package
-    #   after_success:
-    #     - deactivate
-
-    - name: "Install sbt(blackduckcopilot) from DEB package  wo snaps on bionic amd64"
-      dist: bionic
-      arch: amd64
-      language: scala
-      scala:
-        - 2.10.6   
-      script:
-        - cd sbt/example-sbt-blackduckcopilot && sbt package      
-      after_success:
-        - bash <(curl -s https://copilot.blackducksoftware.com/ci/travis/scripts/upload)        
-        - deactivate
-
-# TESTED OK  
-    - name: "Install sbt(gatling scalafmt) from DEB package  wo snaps on bionic amd64"
-      dist: bionic
-      arch: amd64
-      language: scala
-      scala:
-      - 2.12.8   
-      script:
-        - cd sbt/example-sbt-gatling && sbt package #OK
-      after_success:
-        - deactivate
-
-    - name: "Install sbt(gatling scalafmt) from DEB package  wo snaps on bionic amd64"
-      dist: bionic
-      arch: amd64
-      language: scala
-      scala:
-      - 2.12.8   
-      script:
-        - cd sbt/example-sbt-gatling 
-        # List all tasks
-        - sbt && tasks gatling -v
-        #Run all simulations
-        - gatling:test 
-        # Run a single simulation
-        - gatling:testOnly computerdatabase.BasicSimulation 
-      after_success:
-        - deactivate
-
-# cat: /home/travis/.sbt/launchers/1.4.2/sbt-launch.jar.md5: No such file or directory
-# org.scala-sbt#sbt;0.13.0: not found
-    - name: "Install sbt(jacoco) from DEB package  wo snaps on bionic amd64"
-      dist: bionic
-      arch: amd64
-      language: scala
-      scala:
-      - 2.13.1  
-      script:
-        - cd sbt/example-sbt-jacoco && sbt package
-      after_success:
-        - deactivate
-
-# TESTED OK        
-# https://www.scala-sbt.org/1.x/docs/sbt-by-example.html
-# https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Linux.html
-    - name: "Install sbt(scalatest) from DEB package  wo snaps on bionic amd64"
-      dist: bionic
-      arch: amd64
-      language: scala
-      scala:
-      # - 2.11.8
-      - 2.13.1    
-      script:
-        - cd sbt/example-sbt-scalatest && sbt package
-      after_success:
-        - deactivate
-
-# TESTED OK         
-# https://www.scala-sbt.org/1.x/docs/sbt-by-example.html
-# https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Linux.html
-    - name: "Install sbt(scalatest) from DEB package  wo snaps on bionic amd64"
-      dist: bionic
-      arch: amd64
-      language: scala
-      scala:
-      # - 2.11.8
-      - 2.13.1
-      script:
-        - echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
-        - curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
-        - sudo apt-get update -qq
-        - sudo apt-get install sbt -yqq
-        - cd sbt/example-sbt-scalatest && sbt package
-      after_success:
-        - deactivate
-
-# https://www.scala-sbt.org/1.x/docs/sbt-by-example.html
-# https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Linux.html
-    - name: "Install sbt(findbugs) from DEB package  wo snaps on bionic amd64"
-      dist: bionic
-      arch: amd64
-      language: scala
-      scala:
-      - 2.11.8
-      script:
-        - echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
-        - curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
-        - sudo apt-get update -qq
-        - sudo apt-get install sbt -yqq
-        - cd sbt/example-sbt-findbugs && sbt package
-      after_success:
-        - deactivate
-
-
-    # - name: "Install sbt w gatling from DEB package  wo snaps on bionic amd64"
-    #   dist: bionic
-    #   arch: amd64
-    #   language: python
-    #   python: 3.7
-    #   before_install:
-    #     - pip3 install virtualenv
-    #     - virtualenv -p $(which python3) ~venvpy3
-    #     - source ~venvpy3/bin/activate
-    #     - pip install -r requirements.txt
-    #   script:
-    #     - echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
-    #     - curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
-    #     - sudo apt-get update -qq
-    #     - sudo apt-get install sbt -yqq
-    #     - git clone https://github.com/gatling/gatling-sbt-plugin-demo.git && cd gatling-sbt-plugin-demo
-        # - sbt
-        # - gatling:test
-        # - gatling:testOnly computerdatabase.BasicSimulation
-        # - tasks gatling -v
-        # - exit #Exit sbt shell
-      # after_success:
-      #   - deactivate
-
-    - name: "Installing sbt from a third-party package(homebrew) on macOS 10.15.7 osx xcode12.2"
+# https://helm.sh/docs/intro/install/
+# https://minikube.sigs.k8s.io/docs/start/
+    - name: "deploy minikube helm w homebrew on macOS 10.15.7 osx xcode12.2"
       os: osx
       osx_image:
         - xcode12.2 #macOS 10.15.7   
       addons:
         homebrew:
           packages:
-          - sbt
+          - python
+          - minikube
+          - helm
           update: true            
-      language: scala
-      scala:
-      - 2.11.8
-      # before_install:
-      #   - pip3 install virtualenv
-      #   - virtualenv -p $(which python3) ~venvpy3
-      #   - source ~venvpy3/bin/activate
-      #   - python --version
-      #   - pip install -r requirements.txt
+      language: shell
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - python --version
+        - pip install -r requirements.txt
       script:
-      # - cd sbt/example-sbt-findbugs && sbt package
-      - sbt package
-      # - exit #Exit sbt shell
+      - which minikube
+      - minikube version
+      - helm version
       after_success:
         - deactivate
 
-# https://chocolatey.org/
-# https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Windows.html
-    - name: "Installing sbt Python 3.8 on Windows"
-      os: 
-      - windows
+# TESTED OK
+# https://minikube.sigs.k8s.io/docs/start/
+    - name: "deploy minikube wo homebrew on macOS 10.15.7 osx xcode12.2"
+      os: osx
+      osx_image:
+        - xcode12.2 #macOS 10.15.7      
       language: shell
-      env:
-        - PATH=/c/Python38:/c/Python38/Scripts:$PATH
-      # before_install:
-      #   - choco install python
-      #   - python --version
-        # - pip install -r requirements.txt
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - python --version
+        - pip install -r requirements.txt
       script:
-        - choco install sbt
-        - sbt package
-        # Environment Vars (like PATH) have changed. Close/reopen your shell to
-        # see the changes (or in powershell/cmd.exe just type `refreshenv`).
-        # Software installed as 'msi', install location is likely default.
-        # - refreshenv
-        # - cmd.exe //c "RefreshEnv.cmd & sbt.exe"
-        # - sbt
-        # - exit #Exit sbt shell  
-        # - cmd.exe //c "exit.exe"      
-
-# https://scoop.sh/
-# https://kubernetes.io/docs/tasks/tools/install-kubectl/
-# https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Windows.html
-    # - name: "Installing sbt latest w scoop Python 3.8 on Windows"
-    #   os: windows
-    #   language: shell
-    #   env:
-    #     - PATH=/c/Python38:/c/Python38/Scripts:$PATH
-    #   before_install:
-    #     - choco install python
-    #     - python --version
-    #   script:
-      # change the execution policy (i.e. enable Powershell) with
-        # - set #see all currently defined environment variables 
-        # - set USERPROFILE #query the value of %USERPROFILE%
-        # - net user # displays all user accounts on a local machine
-        # - echo Set-ExecutionPolicy RemoteSigned -scope CurrentUser #when debugging a command
-        # - Set-ExecutionPolicy RemoteSigned -scope CurrentUser 
-      # Make sure PowerShell 5 (or later, include PowerShell Core) and .NET Framework 4.5 (or later) are installed.
-        # - Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
-        # - iwr -useb get.scoop.sh | iex # or shorter
-        # - scoop install kubectl
-        # - scoop install sbt
-        # - kubectl version --client #Test to ensure the version you installed is up-to-date
-        # If you're using cmd.exe, run: cd %USERPROFILE%
-        # - echo %USERPROFILE%
-        # - dir
-        # - cd ~
-        # - mkdir .kube #Create the .kube directory
-        # - cd .kube #Change to the .kube directory
-        # -Configure kubectl to use a remote Kubernetes cluster
-        # Edit the config file with a text editor of your choice, such as Notepad
-        # - New-Item config -type file
-        # - dir        
-
-# # https://docs.conan.io/en/1.12/installation.html
-# # https://github.com/conan-io/conan
-#     - name: "Install Conan from source wo snaps on bionic amd64"
-#       dist: bionic
-#       arch: amd64
-#       language: python
-#       python: 3.7
-#       before_install:
-#         - pip3 install virtualenv
-#         - virtualenv -p $(which python3) ~venvpy3
-#         - source ~venvpy3/bin/activate
-#         - pip install -r requirements.txt
-#       script:
-#         - git clone https://github.com/conan-io/conan.git
-#         - cd conan && pip install -r conans/requirements.txt
-#         - conan #Check if Conan is installed correctly.
-#       after_success:
-#         - deactivate
-
-# # https://docs.conan.io/en/1.12/installation.html
-# # https://github.com/conan-io/conan
-#     - name: "Install Conan with pip wo snaps on bionic amd64"
-#       dist: bionic
-#       arch: amd64
-#       language: python
-#       python: 3.7
-#       before_install:
-#         - pip3 install virtualenv
-#         - virtualenv -p $(which python3) ~venvpy3
-#         - source ~venvpy3/bin/activate
-#         - pip install -r requirements.txt
-#       script:
-#         - pip install conan
-#         - conan #Check if Conan is installed correctly.
-#         - sudo make deploy-MD5encrypter-app
-#       after_success:
-#         - deactivate
-
-# # https://docs.conan.io/en/1.12/installation.html
-# # https://github.com/conan-io/conan
-#     - name: "deploy conan w homebrew on macOS 10.15.7 osx xcode12.2"
-#       os: osx
-#       osx_image:
-#         - xcode12.2 #macOS 10.15.7   
-#       addons:
-#         homebrew:
-#           packages:
-#           - python
-#           - conan
-#           update: true            
-#       language: shell
-#       before_install:
-#         - pip3 install virtualenv
-#         - virtualenv -p $(which python3) ~venvpy3
-#         - source ~venvpy3/bin/activate
-#         - python --version
-#         - pip install -r requirements.txt
-#       script:
-#       - conan #Check if Conan is installed correctly.
-#       after_success:
-#         - deactivate
-
-# https://helm.sh/docs/intro/install/
-# https://minikube.sigs.k8s.io/docs/start/
-    # - name: "deploy minikube helm w homebrew on macOS 10.15.7 osx xcode12.2"
-    #   os: osx
-    #   osx_image:
-    #     - xcode12.2 #macOS 10.15.7   
-    #   addons:
-    #     homebrew:
-    #       packages:
-    #       - python
-    #       - minikube
-    #       - helm
-    #       update: true            
-    #   language: shell
-    #   before_install:
-    #     - pip3 install virtualenv
-    #     - virtualenv -p $(which python3) ~venvpy3
-    #     - source ~venvpy3/bin/activate
-    #     - python --version
-    #     - pip install -r requirements.txt
-    #   script:
-    #   - which minikube
-    #   - minikube version
-    #   - helm version
-    #   after_success:
-    #     - deactivate
+      - curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64
+      - sudo install minikube-darwin-amd64 /usr/local/bin/minikube
+      - which minikube
+      - minikube version
+      after_success:
+        - deactivate
 
 # TESTED OK
 # https://minikube.sigs.k8s.io/docs/start/
-    # - name: "deploy minikube wo homebrew on macOS 10.15.7 osx xcode12.2"
-    #   os: osx
-    #   osx_image:
-    #     - xcode12.2 #macOS 10.15.7      
-    #   language: shell
-    #   before_install:
-    #     - pip3 install virtualenv
-    #     - virtualenv -p $(which python3) ~venvpy3
-    #     - source ~venvpy3/bin/activate
-    #     - python --version
-    #     - pip install -r requirements.txt
-    #   script:
-    #   - curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64
-    #   - sudo install minikube-darwin-amd64 /usr/local/bin/minikube
-    #   - which minikube
-    #   - minikube version
-    #   after_success:
-    #     - deactivate
-
-# TESTED OK
-# https://minikube.sigs.k8s.io/docs/start/
-    # - name: "deploy minikube w homebrew on macOS 10.15.7 osx xcode12.2"
-    #   os: osx
-    #   osx_image:
-    #     - xcode12.2 #macOS 10.15.7
-    #   addons:
-    #     homebrew:
-    #       packages:
-    #       - python
-    #       - minikube
-    #       update: true        
-    #   language: shell
-    #   before_install:
-    #     - pip3 install virtualenv
-    #     - virtualenv -p $(which python3) ~venvpy3
-    #     - source ~venvpy3/bin/activate
-    #     - python --version
-    #     - pip install -r requirements.txt
-    #   script:
-    #   - which minikube
-    #   - minikube version
-    #   after_success:
-    #     - deactivate
+    - name: "deploy minikube w homebrew on macOS 10.15.7 osx xcode12.2"
+      os: osx
+      osx_image:
+        - xcode12.2 #macOS 10.15.7
+      addons:
+        homebrew:
+          packages:
+          - python
+          - minikube
+          update: true        
+      language: shell
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - python --version
+        - pip install -r requirements.txt
+      script:
+      - which minikube
+      - minikube version
+      after_success:
+        - deactivate
 
