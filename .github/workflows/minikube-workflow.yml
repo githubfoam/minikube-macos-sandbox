@@ -31,13 +31,14 @@ jobs:
         run: system_profiler | more  
       - name: "osfingerprinting"
         run: uname -a    
-      - name: "Start a minikube cluster"
-        run: |
-          minikube start
-          n=0; until ((n >= 60)); do kubectl -n default get serviceaccount default -o name && break; n=$((n + 1)); sleep 1; done; ((n < 60))                                
+      # /Users/runner/work/_temp/4fa19462-f6e7-4340-9376-bc759641b47f.sh: line 1: minikube: command not found
+      # - name: "Start a minikube cluster"
+      #   run: |
+      #     minikube start
+      #     n=0; until ((n >= 60)); do kubectl -n default get serviceaccount default -o name && break; n=$((n + 1)); sleep 1; done; ((n < 60))                                
 
   macos-latest-minikube-latest:
-      name: "minikube - macos-latest 10.15.7"
+      name: "minikube latest - macos-latest 10.15.7"
       runs-on: macos-latest
       steps:
       - name: Checkout
@@ -61,3 +62,8 @@ jobs:
         run: |
           curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64
           sudo install minikube-darwin-amd64 /usr/local/bin/minikube
+          minikube version --short
+          minikube version --components
+      # If you are running minikube within a VM, consider using --driver=none:  
+      - name: "minikube start --vm-driver none "
+        run: minikube start --vm-driver none         
