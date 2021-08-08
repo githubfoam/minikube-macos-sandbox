@@ -1,0 +1,39 @@
+
+name: "macos minikube CI workflow"
+
+on:
+  push:
+    branches: [ test ]
+  # schedule:
+  #     - cron:  '0 0 * * 0' #At 00:00 on Sunday every week
+
+
+
+jobs:
+
+
+  macos-latest-minikube-latest:
+      name: "minikube latest - macos-latest 10.15.7"
+      runs-on: macos-latest
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: "brew update"
+        run: brew update     
+      - name: "check on brew version"
+        run: brew --version                           
+      - name: "brew cask list"
+        run:   brew list --cask #Warning: Calling brew cask list is deprecated! Use brew list [--cask] instead.
+      - name: "brew list --formula"
+        run: brew list --formula #List all the installed formulas
+      - name: "Get OS X System Version"
+        run: sw_vers       
+      - name: "Get Mac System Details with system_profiler"
+        run: system_profiler | more  
+      - name: "osfingerprinting"
+        run: uname -a    
+      # https://minikube.sigs.k8s.io/docs/start/
+      - name: "install the latest minikube stable release on x86-64 macOS using binary download"
+        run: |
+          curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64
+          sudo install minikube-darwin-amd64 /usr/local/bin/minikube
