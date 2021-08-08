@@ -31,10 +31,10 @@ jobs:
         run: system_profiler | more  
       - name: "osfingerprinting"
         run: uname -a    
-    - name: "Start a minikube cluster"
-      run: |
-        minikube start
-        n=0; until ((n >= 60)); do kubectl -n default get serviceaccount default -o name && break; n=$((n + 1)); sleep 1; done; ((n < 60))                                
+      - name: "Start a minikube cluster"
+        run: |
+          minikube start
+          n=0; until ((n >= 60)); do kubectl -n default get serviceaccount default -o name && break; n=$((n + 1)); sleep 1; done; ((n < 60))                                
 
   macos-latest-minikube-latest:
       name: "minikube - macos-latest 10.15.7"
