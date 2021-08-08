@@ -62,6 +62,8 @@ jobs:
         run: |
           curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64
           sudo install minikube-darwin-amd64 /usr/local/bin/minikube
+          # Profile "minikube" not found. Run "minikube profile list" to view all profiles
+          minikube profile list
           minikube version --short
           minikube version --components
       # If you are running minikube within a VM, consider using --driver=none:  
