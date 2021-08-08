@@ -3,9 +3,9 @@ name: "macos  CI workflow"
 
 on:
   push:
-    branches: [ test ]
-  # schedule:
-  #     - cron:  '0 0 * * 0' #At 00:00 on Sunday every week
+    branches: [ main ]
+  schedule:
+      - cron:  '0 0 * * 0' #At 00:00 on Sunday every week
 
 
 
