@@ -42,8 +42,9 @@ jobs:
           # minikube version --short
           # minikube version --components
       # If you are running minikube within a VM, consider using --driver=none:  
-      - name: "minikube start --vm-driver none "
-        run: minikube start --vm-driver none         
+      # X Exiting due to DRV_UNSUPPORTED_OS: The driver 'none' is not supported on darwin/amd64
+      # - name: "minikube start --vm-driver none "
+      #   run: minikube start --vm-driver none         
 
 
   macos-latest-minikube:
