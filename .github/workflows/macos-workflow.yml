@@ -3,9 +3,9 @@ name: "macos osquery CI workflow"
 
 on:
   push:
-    branches: [ main ]
-  schedule:
-      - cron:  '0 0 * * 0' #At 00:00 on Sunday every week
+    branches: [ dev ]
+  # schedule:
+  #     - cron:  '0 0 * * 0' #At 00:00 on Sunday every week
 
 
 

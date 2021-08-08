@@ -11,31 +11,6 @@ on:
 
 jobs:
 
-  macos-latest-minikube:
-      name: "minikube - macos-latest 10.15.7"
-      runs-on: macos-latest
-      steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: "brew update"
-        run: brew update     
-      - name: "check on brew version"
-        run: brew --version                           
-      - name: "brew cask list"
-        run:   brew list --cask #Warning: Calling brew cask list is deprecated! Use brew list [--cask] instead.
-      - name: "brew list --formula"
-        run: brew list --formula #List all the installed formulas
-      - name: "Get OS X System Version"
-        run: sw_vers       
-      - name: "Get Mac System Details with system_profiler"
-        run: system_profiler | more  
-      - name: "osfingerprinting"
-        run: uname -a    
-      # /Users/runner/work/_temp/4fa19462-f6e7-4340-9376-bc759641b47f.sh: line 1: minikube: command not found
-      # - name: "Start a minikube cluster"
-      #   run: |
-      #     minikube start
-      #     n=0; until ((n >= 60)); do kubectl -n default get serviceaccount default -o name && break; n=$((n + 1)); sleep 1; done; ((n < 60))                                
 
   macos-latest-minikube-latest:
       name: "minikube latest - macos-latest 10.15.7"
@@ -63,9 +38,36 @@ jobs:
           curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64
           sudo install minikube-darwin-amd64 /usr/local/bin/minikube
           # Profile "minikube" not found. Run "minikube profile list" to view all profiles
-          minikube profile list
-          minikube version --short
-          minikube version --components
+          # minikube profile list
+          # minikube version --short
+          # minikube version --components
       # If you are running minikube within a VM, consider using --driver=none:  
       - name: "minikube start --vm-driver none "
         run: minikube start --vm-driver none         
+
+
+  macos-latest-minikube:
+      name: "minikube - macos-latest 10.15.7"
+      runs-on: macos-latest
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: "brew update"
+        run: brew update     
+      - name: "check on brew version"
+        run: brew --version                           
+      - name: "brew cask list"
+        run:   brew list --cask #Warning: Calling brew cask list is deprecated! Use brew list [--cask] instead.
+      - name: "brew list --formula"
+        run: brew list --formula #List all the installed formulas
+      - name: "Get OS X System Version"
+        run: sw_vers       
+      - name: "Get Mac System Details with system_profiler"
+        run: system_profiler | more  
+      - name: "osfingerprinting"
+        run: uname -a    
+      # /Users/runner/work/_temp/4fa19462-f6e7-4340-9376-bc759641b47f.sh: line 1: minikube: command not found
+      # - name: "Start a minikube cluster"
+      #   run: |
+      #     minikube start
+      #     n=0; until ((n >= 60)); do kubectl -n default get serviceaccount default -o name && break; n=$((n + 1)); sleep 1; done; ((n < 60))                                
